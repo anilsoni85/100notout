@@ -1,24 +1,13 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-
+import { GameSetup } from './components/game-setup';
+import { ScoreTable } from './components/score-table';
+import { mockGame } from './types/mock';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <GameSetup game={mockGame} />
+      <ScoreTable game={mockGame} />
     </div>
   );
 }
