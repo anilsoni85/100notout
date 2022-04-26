@@ -6,6 +6,7 @@ type ScoreTableProps = {
 }
 
 export const ScoreHistory = (props : ScoreTableProps) : JSX.Element => {
+  console.log(`Inside ScoreHistory render ${props.game.Rounds.length}`);
   return (<table className="table table-striped">
   <thead>
     <tr>

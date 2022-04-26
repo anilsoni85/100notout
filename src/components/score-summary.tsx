@@ -8,16 +8,17 @@ type ScoreProps = {
 }
 
 export const ScoreSummary = (props : ScoreProps) : JSX.Element => {
-  let [scores, setScores] = useState(new Array<number>());
+  const initState = { scores : new Array<number>(props.game.PlayerNames.length).fill(0) };
+  let [roundScores, setRoundScores] = useState({...initState});
 
   const handleScoreChange = (index : number, value : string) => {
-    scores[index] = parseInt(value);
-    setScores(scores);
+    roundScores.scores[index] = parseInt(value);
+    setRoundScores(roundScores);
   }
 
   const handleAddRoundClick = () => {
-    props.onAddRound(scores, 0);
-    setScores(scores.map(s => 0));
+    props.onAddRound(roundScores.scores, 0);
+    setRoundScores({...initState});
   }
   
   return (<table className="table table-striped">
@@ -34,7 +35,16 @@ export const ScoreSummary = (props : ScoreProps) : JSX.Element => {
       <tr key={index}>
         <td>{index === props.game.Winner ? `${name} 👑` : name }</td>
         <td>{props.game.TotalScore[index]}</td>
-        <td><Form.Control type="number" value={scores[index]} onChange={(evt) => handleScoreChange(index, evt.target.value)} min="0" max="50" size="sm"/></td>
+        <td><Form.Control 
+          type="number" 
+          value={roundScores.scores[index]} 
+          onChange={(evt) => 
+          handleScoreChange(index, evt.target.value)} 
+          min="0" 
+          max="50"
+          placeholder="Enter sum of cards"
+          inputMode="numeric"
+          size="sm"/></td>
       </tr>)
   }
   <tr>

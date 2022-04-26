@@ -6,7 +6,7 @@ import { ScoreSummary } from './components/score-summary';
 import { Game, loadGame, createNewGame, removeGame, resetGame, saveGame, addRound } from './types/game'
 import Button from 'react-bootstrap/Button';
 
-function App() {
+const App = () : JSX.Element => {
   let [game, setGame]  = useState(loadGame());
 
   const handleStartGame = (playerNames : string[]) => {
@@ -22,7 +22,7 @@ function App() {
   const handleResetGame = () => {
     if (game != null) {
       resetGame(game);
-      setGame(game);  
+      setGame(game);
     }
   }
 

@@ -55,7 +55,6 @@ export const addRound = (game : Game, playersSum : number[], declaredBy: number)
   }
   let gameMinSum = Math.min.apply(null, game.TotalScore);;
   game.Winner = game.TotalScore.indexOf(gameMinSum);
-  console.log(`game winner is ${game.Winner} min score ${gameMinSum} totalScore ${game.TotalScore}`);
   let roundNumber = game.Rounds.length + 1;
   let round = new Round(roundNumber, roundWinner, declaredBy, penaltyFor, playersSum, scores);
   game.Rounds.push(round);
