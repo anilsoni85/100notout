@@ -6,14 +6,17 @@ type ScoreProps = {
   game : Game;
   onAddRound: (scores: number[], declaredBy : number) => void; 
 }
-
+type RoundScoreState = {
+  scores : number[]
+}
 export const ScoreSummary = (props : ScoreProps) : JSX.Element => {
   const initState = { scores : new Array<number>(props.game.PlayerNames.length).fill(0) };
-  let [roundScores, setRoundScores] = useState({...initState});
+  let [roundScores, setRoundScores] = useState<RoundScoreState>({...initState});
 
   const handleScoreChange = (index : number, value : string) => {
-    roundScores.scores[index] = parseInt(value);
-    setRoundScores(roundScores);
+    const updatedScores : RoundScoreState = {...roundScores};
+    updatedScores.scores[index] = parseInt(value);
+    setRoundScores(updatedScores);
   }
 
   const handleAddRoundClick = () => {
@@ -38,8 +41,7 @@ export const ScoreSummary = (props : ScoreProps) : JSX.Element => {
         <td><Form.Control 
           type="number" 
           value={roundScores.scores[index]} 
-          onChange={(evt) => 
-          handleScoreChange(index, evt.target.value)} 
+          onChange={(evt) => handleScoreChange(index, evt.target.value)} 
           min="0" 
           max="50"
           placeholder="Enter sum of cards"

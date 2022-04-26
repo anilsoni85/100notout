@@ -21,16 +21,18 @@ const App = () : JSX.Element => {
 
   const handleResetGame = () => {
     if (game != null) {
-      resetGame(game);
-      setGame(game);
+      const updatedGame = {...game};
+      resetGame(updatedGame);
+      setGame(updatedGame);
     }
   }
 
   const handleAddRound = (scores: number[], declaredBy: number) => {
     if (game != null) {
-      addRound(game, scores, declaredBy);
-      saveGame(game);
-      setGame(game);
+      const updatedGame = {...game};
+      addRound(updatedGame, scores, declaredBy);
+      saveGame(updatedGame);
+      setGame(updatedGame);
     }
   }
 
