@@ -1,12 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Game } from '../types/game';
 import Form from 'react-bootstrap/Form';
+import { Button } from 'react-bootstrap';
 type ScoreProps = {
   game : Game;
+  onAddRound: (scores: number[], declaredBy : number) => void; 
 }
 
 export const ScoreSummary = (props : ScoreProps) : JSX.Element => {
-  let players = Array.from(props.game.PlayerNames.keys());
+  let [scores, setScores] = useState(Array<number>(props.game.PlayerNames.length).fill(0));
+
+  const handleSetScore = (index : number, value : string) => {
+    scores[index] = parseInt(value);
+    setScores(scores);
+  }
+
+  const handleAddRoundClick = () => {
+    props.onAddRound(scores, 0);
+    setScores(scores.map(s => 0));
+  }
+  
   return (<table className="table table-striped">
   <thead>
     <tr>
@@ -17,13 +30,16 @@ export const ScoreSummary = (props : ScoreProps) : JSX.Element => {
   </thead>
   <tbody>
   {
-    players.map(p => 
-      <tr key={p}>
-        <td>{props.game.PlayerNames[p]}</td>
-        <td>{props.game.TotalScore[p]}</td>
-        <td><Form.Control type="text" /></td>
+    props.game.PlayerNames.map((name : string, index : number) => 
+      <tr key={index}>
+        <td>{name}</td>
+        <td>{props.game.TotalScore[index]}</td>
+        <td><Form.Control type="text" value={scores[index]} onChange={(evt) => handleSetScore(index, evt.target.value)}/></td>
       </tr>)
   }
+  <tr>
+    <td colSpan={3}><Button variant="primary" onClick={handleAddRoundClick}>Add Round</Button></td>
+  </tr>
   </tbody>
 </table>);
 }

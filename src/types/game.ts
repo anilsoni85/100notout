@@ -71,8 +71,14 @@ export const saveGame = (game: Game) : void => {
   localStorage.setItem("game", JSON.stringify(game));
 }
 
-export const resetGame = () : void => {
+export const removeGame = () : void => {
   localStorage.removeItem("game");
+}
+
+export const resetGame = (game: Game) : void => {
+  game.Rounds = [];
+  game.TotalScore = Array(game.PlayerNames.length).fill(0);
+  saveGame(game);
 }
 
 export const loadGame = () : Game | null => {
