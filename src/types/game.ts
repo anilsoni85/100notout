@@ -2,11 +2,13 @@ export class Game {
   Rounds : Round[];
   PlayerNames : string[];
   TotalScore : number[];
+  Winner : number;
 
   constructor(playerNames : string[]) {
     this.PlayerNames = playerNames;
     this.Rounds = [];
     this.TotalScore = Array(playerNames.length).fill(0);
+    this.Winner = 0;
   }
 }
 
@@ -33,25 +35,29 @@ export const addRound = (game : Game, playersSum : number[], declaredBy: number)
     throw new Error("Invalid score");
 
   let scores : number[] = [];
-  let minimumSum = playersSum[declaredBy];
-  let winner = declaredBy;
+  let roundMinSum = playersSum[declaredBy];
+  let roundWinner = declaredBy;
+  
   for (let i = 0; i < playersSum.length; i++) {
-    if (playersSum[i] <= minimumSum) {
-      minimumSum = playersSum[i];
-      winner = i;
+    if (playersSum[i] <= roundMinSum) {
+      roundMinSum = playersSum[i];
+      roundWinner = i;
     }
   }
   const PenaltyValue = 25;
-  let penaltyFor = (winner !== declaredBy) ? declaredBy : -1; 
+  let penaltyFor = (roundWinner !== declaredBy) ? declaredBy : -1; 
   for (let i = 0; i < playersSum.length; i++) {
-    let playerScore = playersSum[i] - minimumSum;
+    let playerScore = playersSum[i] - roundMinSum;
     if (penaltyFor === i)
       playerScore += PenaltyValue;
     scores[i] = playerScore;
     game.TotalScore[i] += playerScore;
   }
+  let gameMinSum = Math.min.apply(null, game.TotalScore);;
+  game.Winner = game.TotalScore.indexOf(gameMinSum);
+  console.log(`game winner is ${game.Winner} min score ${gameMinSum} totalScore ${game.TotalScore}`);
   let roundNumber = game.Rounds.length + 1;
-  let round = new Round(roundNumber, winner, declaredBy, penaltyFor, playersSum, scores);
+  let round = new Round(roundNumber, roundWinner, declaredBy, penaltyFor, playersSum, scores);
   game.Rounds.push(round);
 }
 

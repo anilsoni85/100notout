@@ -32,9 +32,9 @@ export const ScoreSummary = (props : ScoreProps) : JSX.Element => {
   {
     props.game.PlayerNames.map((name : string, index : number) => 
       <tr key={index}>
-        <td>{name}</td>
+        <td>{index === props.game.Winner ? `${name} 👑` : name }</td>
         <td>{props.game.TotalScore[index]}</td>
-        <td><Form.Control type="text" value={scores[index]} onChange={(evt) => handleScoreChange(index, evt.target.value)}/></td>
+        <td><Form.Control type="number" value={scores[index]} onChange={(evt) => handleScoreChange(index, evt.target.value)} min="0" max="50" size="sm"/></td>
       </tr>)
   }
   <tr>

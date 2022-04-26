@@ -6,7 +6,6 @@ type ScoreTableProps = {
 }
 
 export const ScoreHistory = (props : ScoreTableProps) : JSX.Element => {
-  let players = Array.from(props.game.PlayerNames.keys());
   return (<table className="table table-striped">
   <thead>
     <tr>
@@ -21,8 +20,7 @@ export const ScoreHistory = (props : ScoreTableProps) : JSX.Element => {
       <tr key={round.Id}>
         <td>{round.Id}</td>
         { 
-          //players.map(p => <td>{` ${round.Winner === p ? '*':''} ${round.Score[p]} (${round.Sum[p]}${round.Penalty === p ? 'P':''})`}</td>) 
-          players.map((p, index) => <td key={`r${round.Id}p${index}`}>{round.Score[p]}</td>) 
+          round.Score.map((score, index) => <td key={`r${round.Id}p${index}`}>{score}<sub>{round.Sum[index]}</sub></td>) 
         }
       </tr>)})
   }
