@@ -10,7 +10,7 @@ export const ScoreHistory = (props : ScoreTableProps) : JSX.Element => {
   return (<table className="table table-striped">
   <thead>
     <tr>
-      <th>#</th>
+      <th>Round</th>
       { props.game.PlayerNames.map((name, index) => <th key={`p${index}`}>{name}</th>) }
     </tr>
   </thead>
@@ -26,7 +26,7 @@ export const ScoreHistory = (props : ScoreTableProps) : JSX.Element => {
         }
       </tr>)})
   }
-  <tr key={0}>
+  <tr>
       <th>Total</th>
       { props.game.TotalScore.map((score, index) => <th key={`t${index}`}>{score}</th>) }
   </tr>

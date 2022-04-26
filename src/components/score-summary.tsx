@@ -8,9 +8,9 @@ type ScoreProps = {
 }
 
 export const ScoreSummary = (props : ScoreProps) : JSX.Element => {
-  let [scores, setScores] = useState(Array<number>(props.game.PlayerNames.length).fill(0));
+  let [scores, setScores] = useState(new Array<number>());
 
-  const handleSetScore = (index : number, value : string) => {
+  const handleScoreChange = (index : number, value : string) => {
     scores[index] = parseInt(value);
     setScores(scores);
   }
@@ -34,7 +34,7 @@ export const ScoreSummary = (props : ScoreProps) : JSX.Element => {
       <tr key={index}>
         <td>{name}</td>
         <td>{props.game.TotalScore[index]}</td>
-        <td><Form.Control type="text" value={scores[index]} onChange={(evt) => handleSetScore(index, evt.target.value)}/></td>
+        <td><Form.Control type="text" value={scores[index]} onChange={(evt) => handleScoreChange(index, evt.target.value)}/></td>
       </tr>)
   }
   <tr>
