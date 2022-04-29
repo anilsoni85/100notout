@@ -11,9 +11,11 @@ export const ScoreInput = (props : ScoreInputProps) => {
 
   const handleChange = (evt : React.ChangeEvent<HTMLInputElement>) => {
     let newScore = parseInt(evt.target.value);
-    if (!isNaN(newScore)) {
-      props.onScoreChange(newScore);
-    }
+    if (isNaN(newScore))
+      newScore = 0;
+    if (newScore === 0)
+      evt.target.select();
+    props.onScoreChange(newScore);
   }
 
   if (props.readonly)
