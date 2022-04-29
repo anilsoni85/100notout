@@ -22,7 +22,7 @@ export const ScoreInput = (props : ScoreInputProps) => {
   //⚐
     return (
       <Form.Control 
-            type="number" 
+            type="number"
             value={props.score}
             onChange={handleChange} 
             min="0" 

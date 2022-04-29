@@ -54,7 +54,12 @@ export const ScoreSummary = (props : ScoreProps) : JSX.Element => {
       </tr>)
   }
   <tr>
-    <td colSpan={4}><Button variant="primary" onClick={handleAddRoundClick}>Add Round</Button></td>
+    <td colSpan={4}>
+      <Button 
+        variant="primary" 
+        onClick={handleAddRoundClick} 
+        disabled={roundScores.scores.filter(s => s <= 0).length > 0}>Add Round</Button>
+      </td>
   </tr>
   </tbody>
 </table>);
