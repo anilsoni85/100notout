@@ -35,7 +35,6 @@ const App = () : JSX.Element => {
       setGame(updatedGame);
     }
   }
-
   if (game == null)
     return (
       <div className="App">    
@@ -49,6 +48,7 @@ const App = () : JSX.Element => {
         <Button variant="danger" onClick={handleResetGame}>Reset Game</Button>
         <ScoreSummary game={game} onAddRound={handleAddRound}/>
         <ScoreHistory game={game} />
+        <label>{`v${process.env.REACT_APP_VERSION}`}</label>
       </div>
     );
 }
