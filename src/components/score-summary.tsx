@@ -3,14 +3,14 @@ import { Game } from '../types/game';
 import { Button } from 'react-bootstrap';
 import { ScoreInput } from './score-input';
 
-type ScoreProps = {
+type ScoreSummaryProps = {
   game : Game;
   onAddRound: (scores: number[], declaredBy : number) => void; 
 }
 type RoundScoreState = {
   scores : number[]
 }
-export const ScoreSummary = (props : ScoreProps) : JSX.Element => {
+export const ScoreSummary = (props : ScoreSummaryProps) : JSX.Element => {
   const initState = { scores : new Array<number>(props.game.PlayerNames.length).fill(0) };
   let [roundScores, setRoundScores] = useState<RoundScoreState>({...initState});
 
