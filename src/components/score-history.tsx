@@ -21,10 +21,16 @@ export const ScoreHistory = (props : ScoreHistoryProps) : JSX.Element => {
       <tr key={round.Id}>
         <td width={60}><b>{round.Id}</b></td>
         { 
-          round.Score.map((score, index) => 
-            <td key={`r${round.Id}p${index}`} style={{color: round.Penalty === index ? "red" : round.Winner === index ? "#3CB371" : "black"}}>
-              {score}<sub>{round.Sum[index]}</sub>
-            </td>
+          round.Score.map((score, index) =>
+            {
+              if (isNaN(score))
+                return (<td key={`r${round.Id}p${index}`}>-</td>);
+              else 
+                return (<td key={`r${round.Id}p${index}`} style={{color: round.Penalty === index ? "red" : round.Winner === index ? "#3CB371" : "black"}}>
+                  {score}<sub>{round.Sum[index]}</sub>
+                </td>);
+                
+            }
           ) 
         }
       </tr>)})

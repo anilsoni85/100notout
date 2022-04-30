@@ -33,30 +33,37 @@ export class Round {
 export const addRound = (game : Game, playersSum : number[], declaredBy: number) => {
   if (playersSum.length !== game.PlayerNames.length)
     throw new Error("Invalid score");
-
-  let scores : number[] = [];
+  if (isPlayerOut(game, declaredBy))
+    throw new Error(`Player cannot declare because player is out. Name: ${game.PlayerNames[declaredBy]} TotalScore:${game.TotalScore[declaredBy]}`);
   let roundMinSum = playersSum[declaredBy];
   let roundWinner = declaredBy;
   
   for (let i = 0; i < playersSum.length; i++) {
-    if (playersSum[i] <= roundMinSum) {
+    if (i !== declaredBy
+        && !isPlayerOut(game, i)
+        && !isNaN(playersSum[i]) 
+        && playersSum[i] > 0 
+        && playersSum[i] <= roundMinSum) {
       roundMinSum = playersSum[i];
       roundWinner = i;
     }
   }
   const PenaltyValue = 25;
+  let roundScores : number[] = initRoundScore(game);
   let penaltyFor = (roundWinner !== declaredBy) ? declaredBy : -1; 
   for (let i = 0; i < playersSum.length; i++) {
+    if (isPlayerOut(game, i))
+      continue;
     let playerScore = playersSum[i] - roundMinSum;
     if (penaltyFor === i)
       playerScore += PenaltyValue;
-    scores[i] = playerScore;
+    roundScores[i] = playerScore;
     game.TotalScore[i] += playerScore;
   }
-  let gameMinSum = Math.min.apply(null, game.TotalScore);;
+  let gameMinSum = Math.min.apply(null, game.TotalScore);
   game.Winner = game.TotalScore.indexOf(gameMinSum);
   let roundNumber = game.Rounds.length + 1;
-  let round = new Round(roundNumber, roundWinner, declaredBy, penaltyFor, playersSum, scores);
+  let round = new Round(roundNumber, roundWinner, declaredBy, penaltyFor, playersSum, roundScores);
   game.Rounds.push(round);
 }
 
@@ -95,6 +102,19 @@ export const loadGame = () : Game | null => {
       game = null;
   }
   return game;
+}
+
+export const isValidScore = (game : Game, scores: number[]) : boolean => {
+  let isInvalid = scores.filter((s, i) => s <= 0 && game.TotalScore[i] < 100).length > 0;
+  return !isInvalid;
+}
+
+export const initRoundScore = (game: Game) : number[] => {
+  return game.TotalScore.map(ts => ts > 100 ? NaN : 0);
+}
+
+export const isPlayerOut = (game: Game, playerIndex : number) : boolean => {
+  return game.TotalScore[playerIndex] > 100;
 }
 
 export const mockGame = new Game(["P1", "P2", "P3", "P4", "P5", "P6"]);

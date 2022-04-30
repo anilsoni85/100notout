@@ -3,7 +3,7 @@ import { Form } from 'react-bootstrap';
 
 type ScoreInputProps = {
   score : number,
-  readonly: boolean,
+  isOut: boolean,
   onScoreChange : (newScore : number) => void;
 }
 
@@ -18,7 +18,7 @@ export const ScoreInput = (props : ScoreInputProps) => {
     props.onScoreChange(newScore);
   }
 
-  if (props.readonly)
+  if (props.isOut)
     return (<label>Out</label>);
   else
   //⚐
