@@ -5,8 +5,6 @@ import { ScoreHistory } from './components/score-history';
 import { ScoreSummary } from './components/score-summary';
 import { Navigation } from './components/navigation';
 import { Game, loadGame, createNewGame, removeGame, resetGame, saveGame, addRound } from './types/game'
-import Button from 'react-bootstrap/Button';
-import { Footer } from './components/footer';
 
 const App = () : JSX.Element => {
   let [game, setGame]  = useState(loadGame());
@@ -17,12 +15,15 @@ const App = () : JSX.Element => {
   }
 
   const handleNewGame = () => {
-    removeGame();
-    setGame(null);
+    if (window.confirm("Do you really want to start new game?\r\nAre you sure?")) {
+      removeGame();
+      setGame(null);
+    }
   }
 
   const handleResetGame = () => {
-    if (game != null) {
+    if (game != null 
+      && window.confirm("Do you really want to reset score?\r\nAre you sure?")) {
       const updatedGame = {...game};
       resetGame(updatedGame);
       setGame(updatedGame);
@@ -47,7 +48,6 @@ const App = () : JSX.Element => {
         <ScoreHistory game={game} />
       </>
     }
-    <Footer />
   </div>);
 }
 

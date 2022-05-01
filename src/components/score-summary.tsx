@@ -70,7 +70,7 @@ export const ScoreSummary = (props : ScoreSummaryProps) : JSX.Element => {
         <td width={120}>
           <ScoreInput 
             score={state.scores[index]} 
-             declared={state.declaredBy === index}
+            declared={state.declaredBy === index}
             isOut={isPlayerOut(props.game, index)}
             onScoreChange={(newScore) => handleScoreChange(index, newScore)}
             onDeclaredChange={(declared) => handleDeclaredChange(index, declared)}/> 
@@ -80,6 +80,7 @@ export const ScoreSummary = (props : ScoreSummaryProps) : JSX.Element => {
   <tr>
     <td colSpan={4}>
       <Button 
+        size="sm" 
         variant="primary" 
         onClick={handleAddRoundClick} 
         disabled={!isValidScore(props.game, state.scores, state.declaredBy)}>Add Round</Button>

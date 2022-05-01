@@ -12,9 +12,9 @@ export const Navigation = (props : NavigationProps) : JSX.Element => {
     <Navbar.Brand>{process.env.REACT_APP_NAME}</Navbar.Brand>
     {props.showButtons && 
       <>
-        <Button variant="danger" onClick={props.onNewGame}>New Game</Button>
+        <Button size="sm" variant="danger" onClick={props.onNewGame}>New Game</Button>
         &nbsp;
-        <Button variant="danger" onClick={props.onResetScore}>Reset Score</Button>
+        <Button size="sm" variant="danger" onClick={props.onResetScore}>Reset Score</Button>
       </>
     }
   </Navbar>);
