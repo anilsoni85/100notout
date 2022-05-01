@@ -11,7 +11,8 @@ export const GameSetup = (props : GameSetupProps) => {
   let [newPlayerName, setNewPlayerName] = useState("");
   let [playerNames, setPlayerNames] = useState(new Array<string>());
 
-  const handleAddPlayer = () => {
+  const handleAddPlayer = (evt : React.FormEvent<HTMLFormElement>) : void => {
+    evt.preventDefault();
     if (newPlayerName !== "") {
       playerNames.push(newPlayerName);
       setNewPlayerName("");
