@@ -8,11 +8,15 @@ type ScoreSummaryProps = {
   onAddRound: (scores: number[], declaredBy : number) => void; 
 }
 type ScoreSummaryState = {
-  scores : number[]
+  scores : number[],
+  declaredBy : number
 }
 export const ScoreSummary = (props : ScoreSummaryProps) : JSX.Element => {
   const getInitState = () : ScoreSummaryState => {
-    const initState : ScoreSummaryState = { scores : initRoundScore(props.game)};
+    const initState : ScoreSummaryState = { 
+      scores : initRoundScore(props.game), 
+      declaredBy : -1 
+    };
     return initState;
   }
 
@@ -24,8 +28,21 @@ export const ScoreSummary = (props : ScoreSummaryProps) : JSX.Element => {
     setState(updatedState);
   }
 
+  const handleDeclaredChange = (index : number, declared : boolean) => {
+    if (declared && index !== state.declaredBy) {
+      const updatedState : ScoreSummaryState = {...state};
+      updatedState.declaredBy = index;
+      setState(updatedState);
+    }
+    else if (!declared && index === state.declaredBy) {
+      const updatedState : ScoreSummaryState = {...state};
+      updatedState.declaredBy = -1;
+      setState(updatedState);
+    }
+  }
+
   const handleAddRoundClick = () => {
-    props.onAddRound(state.scores, 3);
+    props.onAddRound(state.scores, state.declaredBy);
     setState(getInitState());
   }
 
@@ -50,11 +67,13 @@ export const ScoreSummary = (props : ScoreSummaryProps) : JSX.Element => {
         }</td>
         <td>{name}</td>
         <td width={100}>{props.game.TotalScore[index]}</td>
-        <td width={100}>
+        <td width={120}>
           <ScoreInput 
             score={state.scores[index]} 
+             declared={state.declaredBy === index}
             isOut={isPlayerOut(props.game, index)}
-            onScoreChange={(newScore) => handleScoreChange(index, newScore)}/> 
+            onScoreChange={(newScore) => handleScoreChange(index, newScore)}
+            onDeclaredChange={(declared) => handleDeclaredChange(index, declared)}/> 
          </td>
       </tr>)
   }
@@ -63,7 +82,7 @@ export const ScoreSummary = (props : ScoreSummaryProps) : JSX.Element => {
       <Button 
         variant="primary" 
         onClick={handleAddRoundClick} 
-        disabled={!isValidScore(props.game, state.scores)}>Add Round</Button>
+        disabled={!isValidScore(props.game, state.scores, state.declaredBy)}>Add Round</Button>
       </td>
   </tr>
   </tbody>

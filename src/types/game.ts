@@ -8,7 +8,7 @@ export class Game {
     this.PlayerNames = playerNames;
     this.Rounds = [];
     this.TotalScore = Array(playerNames.length).fill(0);
-    this.Winner = 0;
+    this.Winner = -1;
   }
 }
 
@@ -90,6 +90,7 @@ export const removeGame = () : void => {
 export const resetGame = (game: Game) : void => {
   game.Rounds = [];
   game.TotalScore = Array(game.PlayerNames.length).fill(0);
+  game.Winner = -1;
   saveGame(game);
 }
 
@@ -104,8 +105,9 @@ export const loadGame = () : Game | null => {
   return game;
 }
 
-export const isValidScore = (game : Game, scores: number[]) : boolean => {
-  let isInvalid = scores.filter((s, i) => s <= 0 && game.TotalScore[i] < 100).length > 0;
+export const isValidScore = (game : Game, scores: number[], declaredBy : number) : boolean => {
+  let isInvalid = scores.filter((s, i) => s <= 0 && game.TotalScore[i] < 100).length > 0
+    || (declaredBy < 0 || declaredBy >= game.PlayerNames.length);
   return !isInvalid;
 }
 

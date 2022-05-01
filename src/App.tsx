@@ -3,8 +3,10 @@ import './App.css';
 import { GameSetup } from './components/game-setup';
 import { ScoreHistory } from './components/score-history';
 import { ScoreSummary } from './components/score-summary';
+import { Navigation } from './components/navigation';
 import { Game, loadGame, createNewGame, removeGame, resetGame, saveGame, addRound } from './types/game'
 import Button from 'react-bootstrap/Button';
+import { Footer } from './components/footer';
 
 const App = () : JSX.Element => {
   let [game, setGame]  = useState(loadGame());
@@ -35,22 +37,18 @@ const App = () : JSX.Element => {
       setGame(updatedGame);
     }
   }
-  if (game == null)
-    return (
-      <div className="App">    
-        <GameSetup onStartGame={handleStartGame} />
-      </div>
-    );
-  else
-    return (
-      <div className="App">
-        <Button variant="danger" onClick={handleNewGame}>New Game</Button>&nbsp;
-        <Button variant="danger" onClick={handleResetGame}>Reset Game</Button>
+  return (
+  <div className="App">
+    <Navigation showButtons={game != null}onNewGame={handleNewGame} onResetScore={handleResetGame}/>
+    {game == null && <GameSetup onStartGame={handleStartGame} /> }
+    {game 
+      && <>
         <ScoreSummary game={game} onAddRound={handleAddRound}/>
         <ScoreHistory game={game} />
-        <label>{`v${process.env.REACT_APP_VERSION}`}</label>
-      </div>
-    );
+      </>
+    }
+    <Footer />
+  </div>);
 }
 
 export default App;

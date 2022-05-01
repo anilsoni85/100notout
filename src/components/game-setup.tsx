@@ -19,14 +19,20 @@ export const GameSetup = (props : GameSetupProps) => {
     }
   }
 
+  //<Button variant="dark" onClick={handleAddPlayer}>Add Player</Button>&nbsp;
   return (<>
   <ol>
     { playerNames.map((name, index) => <li key={index}>{name}</li>) }
     <li>
+      <form onSubmit={handleAddPlayer}>
       <Form.Control type="text" placeholder="Player Name" onChange={(ev) => setNewPlayerName(ev.target.value)} value={newPlayerName}/>
-      <Button variant="dark" onClick={handleAddPlayer}>Add Player</Button>&nbsp;
+      </form>    
     </li>
   </ol>
-  <Button variant="primary" onClick={() => props.onStartGame(playerNames)}>Start Game</Button>
+  <Button 
+    variant="primary" 
+    disabled={playerNames.length<3}
+    onClick={() => props.onStartGame(playerNames)}>Start Game</Button><br/>
+  1. Add 3 or more player and click on Start game to begin. 
   </>);
 }
