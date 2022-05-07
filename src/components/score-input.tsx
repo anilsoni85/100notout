@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Stack, ToggleButton } from 'react-bootstrap';
+import { Button, Form, Stack } from 'react-bootstrap';
 
 type ScoreInputProps = {
   score : number,
@@ -12,10 +12,9 @@ type ScoreInputProps = {
 export const ScoreInput = (props : ScoreInputProps) => {  
 
   const handleChange = (evt : React.ChangeEvent<HTMLInputElement>) => {
-    let newScore = parseInt(evt.target.value);
-    if (isNaN(newScore))
-      newScore = 0;
-    if (newScore === 0)
+    let text = evt.target.value;
+    let newScore = parseInt(text);
+    if (text === "" || newScore === 0)
       evt.target.select();
     props.onScoreChange(newScore);
   }
@@ -34,7 +33,7 @@ export const ScoreInput = (props : ScoreInputProps) => {
       <Button size="sm" variant={props.declared ? "success" : "secondary"} onClick={handleClick}>{props.declared ? "D" : "N"}</Button>
       <Form.Control 
             type="number"
-            value={props.score}
+            value={isNaN(props.score) ? "" : props.score}
             onChange={handleChange} 
             min="0" 
             max="50"
