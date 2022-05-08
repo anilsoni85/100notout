@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Game, initRoundScore, isPlayerOut, isValidScore } from '../types/game';
+import { Game, isPlayerOut, isValidScore } from '../types/game';
 import { Button } from 'react-bootstrap';
 import { ScoreInput } from './score-input';
 
@@ -14,7 +14,7 @@ type ScoreSummaryState = {
 export const ScoreSummary = (props : ScoreSummaryProps) : JSX.Element => {
   const getInitState = () : ScoreSummaryState => {
     const initState : ScoreSummaryState = { 
-      scores : initRoundScore(props.game), 
+      scores : props.game.PlayerNames.map(n => NaN), 
       declaredBy : -1 
     };
     return initState;

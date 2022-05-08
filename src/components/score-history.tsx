@@ -26,7 +26,7 @@ export const ScoreHistory = (props : ScoreHistoryProps) : JSX.Element => {
                 return (<td key={`r${round.Id}p${index}`}>-</td>);
               else 
                 return (<td key={`r${round.Id}p${index}`} style={{color: round.Penalty === index ? "red" : round.Winner === index ? "#3CB371" : "black"}}>
-                  {score}<sub>{round.Sum[index]}</sub>
+                  { round.DeclaredBy === index ? <u>{score}</u> : score }<sub>{round.Sum[index]}</sub>
                 </td>);
                 
             }

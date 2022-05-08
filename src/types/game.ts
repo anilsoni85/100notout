@@ -49,7 +49,7 @@ export const addRound = (game : Game, playersSum : number[], declaredBy: number)
     }
   }
   const PenaltyValue = 25;
-  let roundScores : number[] = initRoundScore(game);
+  let roundScores : number[] = game.TotalScore.map(ts => ts > 100 ? NaN : 0);
   let penaltyFor = (roundWinner !== declaredBy) ? declaredBy : -1; 
   for (let i = 0; i < playersSum.length; i++) {
     if (isPlayerOut(game, i))
@@ -109,10 +109,6 @@ export const isValidScore = (game : Game, scores: number[], declaredBy : number)
   let isInvalid = scores.filter((s, i) => (isNaN(s) || s < 0) && game.TotalScore[i] < 100).length > 0
     || (declaredBy < 0 || declaredBy >= game.PlayerNames.length);
   return !isInvalid;
-}
-
-export const initRoundScore = (game: Game) : number[] => {
-  return game.TotalScore.map(ts => ts > 100 ? NaN : 0);
 }
 
 export const isPlayerOut = (game: Game, playerIndex : number) : boolean => {

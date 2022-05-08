@@ -37,7 +37,6 @@ export const ScoreInput = (props : ScoreInputProps) => {
             onChange={handleChange} 
             min="0" 
             max="50"
-            placeholder="Enter sum of cards"
             inputMode="numeric"
             onFocus={(evt) => evt.target.select()}
             size="sm"/>
