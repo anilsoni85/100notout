@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Game, isPlayerOut, isValidScore } from '../types/game';
+import { Game, isPlayerOut, isValidScore, Round } from '../types/game';
 import { Button } from 'react-bootstrap';
 import { ScoreInput } from './score-input';
 
 type ScoreSummaryProps = {
   game : Game;
   onAddRound: (scores: number[], declaredBy : number) => void; 
+  onEditLastRound: () => Round | undefined;
 }
 type ScoreSummaryState = {
   scores : number[],
@@ -46,6 +47,17 @@ export const ScoreSummary = (props : ScoreSummaryProps) : JSX.Element => {
     setState(getInitState());
   }
 
+  const handleEditLastRound = () => {
+    const removedRound = props.onEditLastRound();
+    if (removedRound) {
+      const scoreSummaryState : ScoreSummaryState = {
+        scores : removedRound.Sum,
+        declaredBy : removedRound.DeclaredBy
+      };
+      setState(scoreSummaryState);
+    }
+  }
+
   
   return (<table className="table table-striped table-bordered">
   <thead>
@@ -84,6 +96,12 @@ export const ScoreSummary = (props : ScoreSummaryProps) : JSX.Element => {
         variant="primary" 
         onClick={handleAddRoundClick} 
         disabled={!isValidScore(props.game, state.scores, state.declaredBy)}>Add Round</Button>
+      &nbsp;
+      <Button 
+        size="sm" 
+        variant="danger" 
+        onClick={handleEditLastRound} 
+        disabled={props.game.Rounds.length <= 0}>Edit Last Round</Button>
       </td>
   </tr>
   </tbody>

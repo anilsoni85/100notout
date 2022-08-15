@@ -4,7 +4,7 @@ import { GameSetup } from './components/game-setup';
 import { ScoreHistory } from './components/score-history';
 import { ScoreSummary } from './components/score-summary';
 import { Navigation } from './components/navigation';
-import { Game, loadGame, createNewGame, removeGame, resetGame, saveGame, addRound } from './types/game'
+import { Game, loadGame, createNewGame, removeGame, resetGame, saveGame, addRound, removeLastRound, Round } from './types/game'
 
 const App = () : JSX.Element => {
   let [game, setGame]  = useState(loadGame());
@@ -38,13 +38,25 @@ const App = () : JSX.Element => {
       setGame(updatedGame);
     }
   }
+
+  const handleEditLastRound = () : Round | undefined => {
+    if (game != null
+      && window.confirm("Do you really want to edit last round?")) {
+      const updatedGame = {...game};
+      const removedRound = removeLastRound(updatedGame);
+      saveGame(updatedGame);
+      setGame(updatedGame);
+      return removedRound;
+    }
+  }
+
   return (
   <div className="App">
     <Navigation showButtons={game != null}onNewGame={handleNewGame} onResetScore={handleResetGame}/>
     {game == null && <GameSetup onStartGame={handleStartGame} /> }
     {game 
       && <>
-        <ScoreSummary game={game} onAddRound={handleAddRound}/>
+        <ScoreSummary game={game} onAddRound={handleAddRound} onEditLastRound={handleEditLastRound} />
         <ScoreHistory game={game} />
       </>
     }

@@ -30,7 +30,7 @@ export class Round {
   }
 }
 
-export const addRound = (game : Game, playersSum : number[], declaredBy: number) => {
+export const addRound = (game : Game, playersSum : number[], declaredBy: number) : Round => {
   if (playersSum.length !== game.PlayerNames.length)
     throw new Error("Invalid score");
   if (isPlayerOut(game, declaredBy))
@@ -65,6 +65,21 @@ export const addRound = (game : Game, playersSum : number[], declaredBy: number)
   let roundNumber = game.Rounds.length + 1;
   let round = new Round(roundNumber, roundWinner, declaredBy, penaltyFor, playersSum, roundScores);
   game.Rounds.push(round);
+  return round;
+}
+
+export const removeLastRound = (game : Game) : Round | undefined => {
+  const lastRound = game.Rounds.pop();
+  const totalScores = new Array(game.PlayerNames.length).fill(0);
+  game.Rounds.forEach(r => {
+    for (let i = 0; i < game.PlayerNames.length; i++) {
+      totalScores[i] += r.Score[i];
+    }
+  });  
+  let gameMinScore = Math.min.apply(null, totalScores);
+  game.TotalScore = totalScores;
+  game.Winner = totalScores.indexOf(gameMinScore);
+  return lastRound;
 }
 
 export const addPlayer = (game : Game, playerName : string) : void => {
