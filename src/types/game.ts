@@ -42,7 +42,7 @@ export const addRound = (game : Game, playersSum : number[], declaredBy: number)
     if (i !== declaredBy
         && !isPlayerOut(game, i)
         && !isNaN(playersSum[i]) 
-        && playersSum[i] > 0 
+        && playersSum[i] >= 0 
         && playersSum[i] <= roundMinSum) {
       roundMinSum = playersSum[i];
       roundWinner = i;

@@ -84,4 +84,18 @@ describe('100notout tests', () => {
       expect(game.TotalScore).toEqual([21, 0, 100]);
     });
   });
+
+  describe('bugs', () => {
+    it('#1', () => {
+      const game = createNewGame(["A", "B", "C"]);
+      const round = addRound(game, [0, 5, 3], 1);
+      expect(round.DeclaredBy).toEqual(1);
+      expect(round.Winner).toEqual(0);
+      expect(round.Sum).toEqual([0, 5, 3]);
+      expect(round.Penalty).toEqual(1);
+      expect(round.Score).toEqual([0, 30, 3]);
+      expect(game.Rounds.length).toEqual(1);
+      expect(game.TotalScore).toEqual([0, 30, 3]);
+    });
+  });
 });
