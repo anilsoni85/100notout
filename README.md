@@ -1,10 +1,14 @@
-# Getting Started with Create React App
+# 100NotOut
 
-A scoreing application for 100NotOut card game 
+A scoring application for 100NotOut card game. 
 
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `npm install`
+
+To install all dependencies.
 
 ### `npm start`
 
