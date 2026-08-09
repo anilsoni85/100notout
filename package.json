@@ -2,7 +2,7 @@
   "name": "100notout",
   "version": "1.0.5",
   "private": true,
-  "homepage": "https://anilsoni85.github.io/100notout",
+  "homepage": "https://100notout.codejunction.dev",
   "dependencies": {
     "bootstrap": "^5.3.3",
     "react": "^18.3.1",
